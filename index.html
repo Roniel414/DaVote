@@ -83,6 +83,18 @@ h1 span.cyan{color:var(--cyan);}
 .feat-title{font-size:0.95rem;font-weight:700;margin-bottom:0.3rem;}
 .feat-body{font-size:0.82rem;color:rgba(255,255,255,0.45);line-height:1.5;}
 
+/* PRICING TOGGLE */
+.pricing-toggle { display: flex; align-items: center; justify-content: center; gap: 1rem; margin-bottom: 2rem; }
+.toggle-label { font-size: 0.9rem; color: #888; font-weight: 600; }
+.toggle-label.active { color: #fff; }
+.toggle-wrap { position: relative; width: 56px; height: 28px; }
+.toggle-wrap input { opacity: 0; width: 0; height: 0; }
+.toggle-slider { position: absolute; cursor: pointer; inset: 0; background: #333; border-radius: 28px; transition: 0.3s; }
+.toggle-slider:before { content: ""; position: absolute; height: 20px; width: 20px; left: 4px; bottom: 4px; background: #fff; border-radius: 50%; transition: 0.3s; }
+.toggle-wrap input:checked + .toggle-slider { background: var(--purple); }
+.toggle-wrap input:checked + .toggle-slider:before { transform: translateX(28px); }
+.save-badge { background: #1a3a1a; color: #5acd5a; font-size: 0.7rem; font-weight: 700; padding: 0.2rem 0.6rem; border-radius: 20px; border: 1px solid #3a8a3a; }
+
 /* PRICING */
 .pricing{display:flex;gap:1.25rem;flex-wrap:wrap;justify-content:center;}
 .price-card{flex:1;min-width:220px;max-width:280px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:1.75rem 1.5rem;text-align:center;position:relative;}
@@ -214,51 +226,96 @@ footer{padding:2rem 1.5rem;border-top:1px solid rgba(255,255,255,0.06);display:f
 <div class="section" style="padding-top:0">
   <div class="section-label">Pricing</div>
   <h2 class="section-title">Simple pricing.<br/>Built for artists.</h2>
+  <div class="pricing-toggle">
+    <span class="toggle-label active" id="label-monthly">Monthly</span>
+    <label class="toggle-wrap">
+      <input type="checkbox" id="billing-toggle" onchange="toggleBilling()"/>
+      <span class="toggle-slider"></span>
+    </label>
+    <span class="toggle-label" id="label-annual">Annual</span>
+    <span class="save-badge">Save 2 months free!</span>
+  </div>
   <div class="pricing">
     <div class="price-card">
       <div class="price-tier">Starter</div>
-      <div class="price-amt">$29</div>
-      <div class="price-period">per month</div>
+      <div class="price-amt" id="price-starter">$29</div>
+      <div class="price-period" id="period-starter">per month</div>
+      <div style="font-size:0.75rem;color:#d4a017;margin-top:0.4rem">+ $99 one-time setup fee</div>
+      <div style="font-size:0.7rem;color:#666;margin-top:0.2rem" id="first-starter">First month total: $128</div>
       <div class="price-divider"></div>
       <ul class="price-features">
         <li>1 event per month</li>
         <li>Up to 500 fans</li>
-        <li>Core fan voting</li>
-        <li>QR code generation</li>
-        <li>Live vote counts</li>
+        <li>Artist dashboard & PIN login</li>
+        <li>Fan voting — Like, Replay, Skip</li>
+        <li>Live fan counter</li>
+        <li>Custom QR code</li>
+        <li>Direct support from Roniel</li>
       </ul>
-      <a href="#demo-form" class="price-btn" onclick="document.getElementById('demo-form').scrollIntoView({behavior:'smooth'});return false;">Get Started</a>
+      <a id="btn-starter" href="https://square.link/u/howJcFSc" target="_blank" class="price-btn">Get Started</a>
     </div>
     <div class="price-card featured">
       <div class="price-badge">Most Popular</div>
       <div class="price-tier">Pro</div>
-      <div class="price-amt">$79</div>
-      <div class="price-period">per month</div>
+      <div class="price-amt" id="price-pro">$79</div>
+      <div class="price-period" id="period-pro">per month</div>
+      <div style="font-size:0.75rem;color:#d4a017;margin-top:0.4rem">+ $99 one-time setup fee</div>
+      <div style="font-size:0.7rem;color:#666;margin-top:0.2rem" id="first-pro">First month total: $178</div>
       <div class="price-divider"></div>
       <ul class="price-features">
         <li>Unlimited events</li>
         <li>Up to 5,000 fans</li>
         <li>Analytics dashboard</li>
-        <li>Custom branded page</li>
+        <li>Custom branded landing page</li>
         <li>Priority support</li>
+        <li>Everything in Starter</li>
       </ul>
-      <a href="#demo-form" class="price-btn" onclick="document.getElementById('demo-form').scrollIntoView({behavior:'smooth'});return false;">Get Started</a>
+      <a id="btn-pro" href="https://square.link/u/D8OSRPSW" target="_blank" class="price-btn">Get Started</a>
     </div>
     <div class="price-card">
       <div class="price-tier">Label</div>
-      <div class="price-amt">$299</div>
-      <div class="price-period">per month</div>
+      <div class="price-amt" id="price-label">$299</div>
+      <div class="price-period" id="period-label">per month</div>
+      <div style="font-size:0.75rem;color:#d4a017;margin-top:0.4rem">+ $199 one-time setup fee</div>
+      <div style="font-size:0.7rem;color:#666;margin-top:0.2rem" id="first-label">First month total: $498</div>
       <div class="price-divider"></div>
       <ul class="price-features">
         <li>Up to 20 artists</li>
-        <li>White-label options</li>
+        <li>White-label branding</li>
+        <li>Custom domain setup</li>
         <li>Full analytics suite</li>
         <li>Dedicated support</li>
-        <li>Custom onboarding</li>
+        <li>Affiliate program access</li>
+        <li>Everything in Pro</li>
       </ul>
-      <a href="#demo-form" class="price-btn" onclick="document.getElementById('demo-form').scrollIntoView({behavior:'smooth'});return false;">Contact Us</a>
+      <a id="btn-label" href="https://square.link/u/mtSE75RP" target="_blank" class="price-btn">Get Started</a>
     </div>
   </div>
+</div>
+
+<!-- CONCERT ADD-ONS -->
+<div class="section" style="padding-top:0">
+  <div class="section-label">Event Add-Ons</div>
+  <h2 class="section-title">Going bigger?<br/>We scale with you.</h2>
+  <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:12px;overflow:hidden;">
+    <table style="width:100%;border-collapse:collapse;font-size:0.9rem;">
+      <thead>
+        <tr style="background:#1a140a;">
+          <th style="padding:0.85rem 1.25rem;text-align:left;color:#d4a017;font-size:0.72rem;letter-spacing:0.1em;text-transform:uppercase;">Event Type</th>
+          <th style="padding:0.85rem 1.25rem;text-align:left;color:#d4a017;font-size:0.72rem;letter-spacing:0.1em;text-transform:uppercase;">Fan Capacity</th>
+          <th style="padding:0.85rem 1.25rem;text-align:left;color:#d4a017;font-size:0.72rem;letter-spacing:0.1em;text-transform:uppercase;">One-Time Price</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="border-bottom:1px solid rgba(255,255,255,0.06)"><td style="padding:0.85rem 1.25rem;color:#ccc">Club Event</td><td style="padding:0.85rem 1.25rem;color:#888">Up to 500 fans</td><td style="padding:0.85rem 1.25rem;color:#d4a017;font-weight:700">$299</td></tr>
+        <tr style="border-bottom:1px solid rgba(255,255,255,0.06)"><td style="padding:0.85rem 1.25rem;color:#ccc">Theater Event</td><td style="padding:0.85rem 1.25rem;color:#888">Up to 2,000 fans</td><td style="padding:0.85rem 1.25rem;color:#d4a017;font-weight:700">$499</td></tr>
+        <tr style="border-bottom:1px solid rgba(255,255,255,0.06)"><td style="padding:0.85rem 1.25rem;color:#ccc">Arena Event</td><td style="padding:0.85rem 1.25rem;color:#888">Up to 10,000 fans</td><td style="padding:0.85rem 1.25rem;color:#d4a017;font-weight:700">$999</td></tr>
+        <tr style="border-bottom:1px solid rgba(255,255,255,0.06)"><td style="padding:0.85rem 1.25rem;color:#ccc">Stadium Event</td><td style="padding:0.85rem 1.25rem;color:#888">50,000+ fans</td><td style="padding:0.85rem 1.25rem;color:#d4a017;font-weight:700">$1,999</td></tr>
+        <tr><td style="padding:0.85rem 1.25rem;color:#ccc">Tour Package</td><td style="padding:0.85rem 1.25rem;color:#888">Unlimited events</td><td style="padding:0.85rem 1.25rem;color:#d4a017;font-weight:700">$4,999</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p style="font-size:0.8rem;color:#555;margin-top:1rem;text-align:center">All prices are one-time per event. No hidden fees. Contact Roniel to book: 414.616.7885</p>
 </div>
 
 <!-- BOTTOM CTA -->
@@ -272,18 +329,154 @@ footer{padding:2rem 1.5rem;border-top:1px solid rgba(255,255,255,0.06);display:f
   </form>
 </div>
 
-<!-- FOOTER -->
-<footer>
-  <div class="footer-brand"><img src="davote-logo.png" alt="DAVOTE™" style="height:32px;width:auto;"/></div>
-  <div class="footer-links">
-    <a href="https://davote.app" target="_blank">davote.app</a>
-    <a href="https://workwithroniel.com" target="_blank">workwithroniel.com</a>
-    <a href="tel:4146167885">414.616.7885</a>
+<!-- LEGAL FOOTER -->
+<div style="background:#080808;border-top:1px solid rgba(255,255,255,0.06);padding:3rem 1.5rem;">
+  <div style="max-width:1000px;margin:0 auto;">
+
+    <!-- LEGAL LINKS -->
+    <div style="display:flex;flex-wrap:wrap;gap:1.5rem;justify-content:center;margin-bottom:2rem;">
+      <a href="#terms" onclick="showLegal('terms')" style="font-size:0.78rem;color:#888;text-decoration:none;">Terms of Service</a>
+      <a href="#privacy" onclick="showLegal('privacy')" style="font-size:0.78rem;color:#888;text-decoration:none;">Privacy Policy</a>
+      <a href="#refund" onclick="showLegal('refund')" style="font-size:0.78rem;color:#888;text-decoration:none;">Refund Policy</a>
+      <a href="#disclaimer" onclick="showLegal('disclaimer')" style="font-size:0.78rem;color:#888;text-decoration:none;">Disclaimer</a>
+    </div>
+
+    <!-- LEGAL MODALS -->
+    <div id="legal-modal" style="display:none;background:#111;border:1px solid #222;border-radius:12px;padding:2rem;margin-bottom:2rem;max-height:400px;overflow-y:auto;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;">
+        <h3 id="legal-title" style="font-size:1rem;color:#d4a017;"></h3>
+        <button onclick="hideLegal()" style="background:transparent;border:none;color:#888;cursor:pointer;font-size:1.2rem;">✕</button>
+      </div>
+      <div id="legal-content" style="font-size:0.82rem;color:#aaa;line-height:1.8;"></div>
+    </div>
+
+    <!-- REQUIRED DISCLOSURES -->
+    <div style="background:#0d0d0d;border:1px solid #1a1a1a;border-radius:8px;padding:1.25rem;margin-bottom:2rem;">
+      <p style="font-size:0.72rem;color:#555;line-height:1.8;text-align:center;">
+        DAVOTE™ is a product of Sylvester Enterprises, owned and operated by Roniel Sylvester, Cedar Hill, Texas.
+        All subscriptions are billed in USD. Setup fees are non-refundable. Monthly subscriptions may be cancelled at any time with 30 days written notice.
+        Annual subscriptions are non-refundable after 14 days. DAVOTE™ is not responsible for service interruptions caused by third-party providers.
+        By purchasing any DAVOTE service you agree to our Terms of Service and Privacy Policy.
+        All prices are clearly listed with no hidden fees. Setup fee is a one-time charge collected at time of first payment.
+        Recurring subscription payments begin after the setup period is complete.
+      </p>
+    </div>
+
+    <!-- FOOTER BOTTOM -->
+    <div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:1rem;">
+      <img src="davote-logo.png" alt="DAVOTE™" style="height:32px;width:auto;"/>
+      <div style="font-size:0.72rem;color:#444;text-align:center;">
+        © 2025 DAVOTE™ | Sylvester Enterprises | All Rights Reserved<br/>
+        DAVOTE™ is a trademark of Sylvester Enterprises — Copyright Registration #1-15173929841
+      </div>
+      <div style="font-size:0.72rem;color:#444;">
+        davote.app | 414.616.7885 | workwithroniel.com
+      </div>
+    </div>
+
   </div>
-  <div class="footer-copy">© 2026 Sylvester Enterprises. All rights reserved. DAVOTE™</div>
-</footer>
+</div>
 
 <script>
+const legalContent = {
+  terms: {
+    title: "Terms of Service",
+    content: `<strong>Effective Date: 2025 | DAVOTE™ | Sylvester Enterprises</strong><br/><br/>
+    By using DAVOTE you agree to these Terms of Service.<br/><br/>
+    <strong>1. ACCEPTANCE</strong><br/>By accessing davote.app or purchasing any DAVOTE service you agree to be bound by these terms and all applicable laws.<br/><br/>
+    <strong>2. SERVICES</strong><br/>DAVOTE provides real-time fan voting software for music artists and events. Services are provided on a subscription basis with a one-time setup fee.<br/><br/>
+    <strong>3. PAYMENTS</strong><br/>Setup fees are non-refundable. Monthly subscriptions may be cancelled with 30 days written notice. Annual subscriptions are non-refundable after 14 days. All prices are in USD.<br/><br/>
+    <strong>4. ACCEPTABLE USE</strong><br/>You agree not to use DAVOTE for illegal purposes, to harass others, to copy or reverse engineer the platform, or to misrepresent your identity.<br/><br/>
+    <strong>5. ARTIST ACCOUNTS</strong><br/>Artists are responsible for keeping their PIN confidential and for all activity under their account.<br/><br/>
+    <strong>6. INTELLECTUAL PROPERTY</strong><br/>DAVOTE™ and all associated content, code, and branding are the property of Sylvester Enterprises. Copyright Registration #1-15173929841.<br/><br/>
+    <strong>7. LIMITATION OF LIABILITY</strong><br/>Sylvester Enterprises is not liable for any damages arising from use of the platform including service interruptions, data loss, or third-party failures.<br/><br/>
+    <strong>8. CHANGES</strong><br/>We may update these terms at any time. Continued use constitutes acceptance.<br/><br/>
+    <strong>Contact:</strong> Roniel Sylvester | 414.616.7885 | workwithroniel.com`
+  },
+  privacy: {
+    title: "Privacy Policy",
+    content: `<strong>Effective Date: 2025 | DAVOTE™ | Sylvester Enterprises</strong><br/><br/>
+    <strong>INFORMATION WE COLLECT</strong><br/>
+    • Artists: Name, email address, payment information<br/>
+    • Fans: Vote data only — anonymous, no name or email required<br/>
+    • All users: Device type, browser type, IP address (standard web data)<br/><br/>
+    <strong>HOW WE USE YOUR INFORMATION</strong><br/>
+    • To provide and improve the DAVOTE platform<br/>
+    • To process artist payments via Square<br/>
+    • To send artists account updates<br/>
+    • To analyze platform usage<br/>
+    • We do NOT sell your information to any third party<br/><br/>
+    <strong>DATA STORAGE</strong><br/>Data is stored securely using Google Firebase. Vote data is retained for 90 days after an event. Artist account data is retained while subscription is active.<br/><br/>
+    <strong>COOKIES</strong><br/>DAVOTE uses standard browser cookies to maintain session information. No advertising cookies are used.<br/><br/>
+    <strong>YOUR RIGHTS</strong><br/>You may request deletion of your data at any time by contacting us.<br/><br/>
+    <strong>THIRD PARTY SERVICES</strong><br/>DAVOTE uses Firebase (Google), Netlify, Formspree, and Square. Each has their own privacy policy.<br/><br/>
+    <strong>CHILDREN</strong><br/>DAVOTE is not intended for users under 13 years of age.<br/><br/>
+    <strong>Contact:</strong> Roniel Sylvester | 414.616.7885 | workwithroniel.com`
+  },
+  refund: {
+    title: "Refund Policy",
+    content: `<strong>Effective Date: 2025 | DAVOTE™ | Sylvester Enterprises</strong><br/><br/>
+    <strong>SETUP FEES</strong><br/>All setup fees are non-refundable. Setup fees cover the cost of building and deploying your custom DAVOTE platform.<br/><br/>
+    <strong>MONTHLY SUBSCRIPTIONS</strong><br/>Monthly subscriptions may be cancelled at any time with 30 days written notice. No refunds are issued for the current billing period.<br/><br/>
+    <strong>ANNUAL SUBSCRIPTIONS</strong><br/>Annual subscriptions may be cancelled within 14 days of payment for a full refund minus the setup fee. After 14 days annual subscriptions are non-refundable.<br/><br/>
+    <strong>CONCERT & EVENT ADD-ONS</strong><br/>Event add-on payments are non-refundable once the platform has been configured. Cancellations made 7 or more days before the event date may receive a 50% credit toward a future event.<br/><br/>
+    <strong>SERVICE ISSUES</strong><br/>If DAVOTE experiences a platform failure during your event due to our error we will provide a credit toward your next event or subscription period.<br/><br/>
+    <strong>HOW TO REQUEST A REFUND</strong><br/>Contact Roniel Sylvester directly:<br/>
+    📱 414.616.7885<br/>
+    🌐 workwithroniel.com<br/>
+    💻 davote.app<br/><br/>
+    All refund requests are reviewed within 3 business days.`
+  },
+  disclaimer: {
+    title: "Disclaimer",
+    content: `<strong>Effective Date: 2025 | DAVOTE™ | Sylvester Enterprises</strong><br/><br/>
+    <strong>NO GUARANTEE OF RESULTS</strong><br/>DAVOTE provides a fan voting and engagement platform. We do not guarantee any specific business results, fan engagement numbers, or music industry outcomes from use of our platform.<br/><br/>
+    <strong>THIRD PARTY SERVICES</strong><br/>DAVOTE relies on third-party services including Google Firebase, Netlify, Formspree, and Square. We are not responsible for outages or failures of these services.<br/><br/>
+    <strong>INTERNET DEPENDENCY</strong><br/>DAVOTE requires an active internet connection to function. We are not responsible for poor connectivity at events.<br/><br/>
+    <strong>REVENUE PROJECTIONS</strong><br/>Any revenue projections or financial estimates presented on this website are for illustrative purposes only and are not guarantees of income.<br/><br/>
+    <strong>INTELLECTUAL PROPERTY</strong><br/>DAVOTE™ is a trademark of Sylvester Enterprises. Copyright Registration #1-15173929841. Unauthorized use of the DAVOTE name, logo, or platform is prohibited.<br/><br/>
+    <strong>GOVERNING LAW</strong><br/>These terms are governed by the laws of the State of Texas.<br/><br/>
+    <strong>Contact:</strong> Roniel Sylvester | 414.616.7885 | workwithroniel.com`
+  }
+};
+
+function showLegal(type) {
+  document.getElementById('legal-title').textContent = legalContent[type].title;
+  document.getElementById('legal-content').innerHTML = legalContent[type].content;
+  document.getElementById('legal-modal').style.display = 'block';
+  document.getElementById('legal-modal').scrollIntoView({behavior:'smooth'});
+  return false;
+}
+
+function hideLegal() {
+  document.getElementById('legal-modal').style.display = 'none';
+}
+</script>
+
+<script>
+function toggleBilling() {
+  const annual = document.getElementById('billing-toggle').checked;
+  // Prices
+  document.getElementById('price-starter').textContent = annual ? '$290' : '$29';
+  document.getElementById('price-pro').textContent = annual ? '$790' : '$79';
+  document.getElementById('price-label').textContent = annual ? '$2,990' : '$299';
+  // Periods
+  document.getElementById('period-starter').textContent = annual ? 'per year — save $58' : 'per month';
+  document.getElementById('period-pro').textContent = annual ? 'per year — save $158' : 'per month';
+  document.getElementById('period-label').textContent = annual ? 'per year — save $598' : 'per month';
+  // First totals
+  document.getElementById('first-starter').textContent = annual ? 'First year total: $389' : 'First month total: $128';
+  document.getElementById('first-pro').textContent = annual ? 'First year total: $889' : 'First month total: $178';
+  document.getElementById('first-label').textContent = annual ? 'First year total: $3,189' : 'First month total: $498';
+  // Links
+  document.getElementById('btn-starter').href = annual ? 'https://square.link/u/xFR4G2Us' : 'https://square.link/u/howJcFSc';
+  document.getElementById('btn-pro').href = annual ? 'https://square.link/u/gLEyHGum' : 'https://square.link/u/D8OSRPSW';
+  document.getElementById('btn-label').href = annual ? 'https://square.link/u/Yz52v0RM' : 'https://square.link/u/mtSE75RP';
+  // Labels
+  document.getElementById('label-monthly').classList.toggle('active', !annual);
+  document.getElementById('label-annual').classList.toggle('active', annual);
+}
+
 // No JS needed - Formspree handles submissions securely
 </script>
 </body>

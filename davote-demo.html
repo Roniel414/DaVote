@@ -1,0 +1,1241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DAVOTE™ — Live Platform Demo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --gold: #C9A84C;
+  --gold-light: #E8C96A;
+  --black: #080808;
+  --dark: #0f0f0f;
+  --card: #141414;
+  --card2: #1a1a1a;
+  --border: rgba(201,168,76,0.2);
+  --text: #e8e0d0;
+  --muted: rgba(232,224,208,0.5);
+  --green: #4CAF7D;
+  --red: #E05A5A;
+  --blue: #5A9AE0;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--black);
+  color: var(--text);
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  overflow-x: hidden;
+}
+
+/* ── BACKGROUND ── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 60% 40% at 50% 0%, rgba(201,168,76,0.07) 0%, transparent 70%),
+    repeating-linear-gradient(0deg, transparent, transparent 60px, rgba(201,168,76,0.012) 60px, rgba(201,168,76,0.012) 61px),
+    repeating-linear-gradient(90deg, transparent, transparent 60px, rgba(201,168,76,0.012) 60px, rgba(201,168,76,0.012) 61px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  background: rgba(8,8,8,0.92);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 40px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.nav-logo {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 28px;
+  letter-spacing: 0.15em;
+  color: var(--gold);
+  text-shadow: 0 0 20px rgba(201,168,76,0.3);
+}
+.nav-logo::after { content: '™'; font-size: 0.3em; vertical-align: super; }
+
+.nav-badge {
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.25em;
+  color: var(--black);
+  background: var(--gold);
+  padding: 4px 10px;
+  border-radius: 2px;
+  text-transform: uppercase;
+}
+
+.nav-links {
+  display: flex;
+  gap: 32px;
+  list-style: none;
+}
+
+.nav-links a {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  color: var(--muted);
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--gold); }
+
+/* ── SECTIONS ── */
+section {
+  position: relative;
+  z-index: 1;
+}
+
+/* ── HERO ── */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 100px 40px 60px;
+}
+
+.hero-eyebrow {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.4em;
+  color: var(--gold);
+  text-transform: uppercase;
+  margin-bottom: 24px;
+  opacity: 0;
+  animation: fadeUp 0.8s ease 0.2s both;
+}
+
+.hero-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(80px, 18vw, 160px);
+  letter-spacing: 0.08em;
+  color: var(--gold);
+  line-height: 0.9;
+  text-shadow: 0 0 80px rgba(201,168,76,0.25), 0 0 160px rgba(201,168,76,0.1);
+  opacity: 0;
+  animation: fadeUp 0.8s ease 0.3s both;
+}
+.hero-title::after { content: '™'; font-size: 0.18em; vertical-align: super; letter-spacing: 0; }
+
+.hero-sub {
+  font-size: clamp(18px, 3vw, 28px);
+  color: var(--text);
+  font-weight: 300;
+  font-style: italic;
+  margin: 20px 0 8px;
+  opacity: 0;
+  animation: fadeUp 0.8s ease 0.4s both;
+}
+
+.hero-desc {
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  color: var(--muted);
+  text-transform: uppercase;
+  margin-bottom: 48px;
+  opacity: 0;
+  animation: fadeUp 0.8s ease 0.5s both;
+}
+
+.hero-stats {
+  display: flex;
+  gap: 48px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 56px;
+  opacity: 0;
+  animation: fadeUp 0.8s ease 0.6s both;
+}
+
+.stat {
+  text-align: center;
+}
+
+.stat-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 48px;
+  color: var(--gold);
+  letter-spacing: 0.05em;
+  line-height: 1;
+}
+
+.stat-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  color: var(--muted);
+  text-transform: uppercase;
+  margin-top: 4px;
+}
+
+.divider {
+  width: 1px;
+  height: 48px;
+  background: var(--border);
+  align-self: center;
+}
+
+.hero-cta {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+  opacity: 0;
+  animation: fadeUp 0.8s ease 0.7s both;
+}
+
+.btn-primary {
+  padding: 16px 40px;
+  background: linear-gradient(135deg, var(--gold), #a8862e);
+  border: none;
+  border-radius: 2px;
+  color: var(--black);
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 16px;
+  letter-spacing: 0.2em;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.3s;
+  display: inline-block;
+}
+.btn-primary:hover { box-shadow: 0 0 30px rgba(201,168,76,0.4); transform: translateY(-2px); }
+
+.btn-outline {
+  padding: 16px 40px;
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  color: var(--gold);
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 16px;
+  letter-spacing: 0.2em;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.3s;
+  display: inline-block;
+}
+.btn-outline:hover { border-color: var(--gold); background: rgba(201,168,76,0.05); }
+
+/* ── LIVE DEMO SECTION ── */
+.live-demo {
+  padding: 100px 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.section-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.4em;
+  color: var(--gold);
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+
+.section-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(36px, 6vw, 56px);
+  letter-spacing: 0.1em;
+  color: var(--text);
+  margin-bottom: 8px;
+  line-height: 1;
+}
+
+.section-sub {
+  font-size: 18px;
+  color: var(--muted);
+  font-style: italic;
+  margin-bottom: 48px;
+}
+
+/* ── VOTING DEMO ── */
+.voting-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-bottom: 24px;
+}
+
+@media (max-width: 768px) {
+  .voting-container { grid-template-columns: 1fr; }
+  nav { padding: 0 20px; }
+  .nav-links { display: none; }
+  .hero { padding: 100px 20px 60px; }
+  .live-demo, .features, .how-it-works, .cta-section { padding: 60px 20px; }
+}
+
+.voting-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.voting-header {
+  background: linear-gradient(135deg, rgba(201,168,76,0.1), rgba(201,168,76,0.03));
+  border-bottom: 1px solid var(--border);
+  padding: 20px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.voting-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 18px;
+  letter-spacing: 0.1em;
+  color: var(--gold-light);
+}
+
+.live-badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  color: var(--green);
+  text-transform: uppercase;
+}
+
+.live-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--green);
+  animation: blink 1.5s ease-in-out infinite;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+.voting-body { padding: 24px; }
+
+.artist-event {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgba(201,168,76,0.1);
+}
+
+.artist-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--gold), #7a5a1a);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 18px;
+  color: var(--black);
+  flex-shrink: 0;
+}
+
+.artist-info h4 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 16px;
+  letter-spacing: 0.1em;
+  color: var(--text);
+}
+
+.artist-info p {
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  color: var(--muted);
+  letter-spacing: 0.15em;
+  margin-top: 2px;
+}
+
+.vote-question {
+  font-size: 15px;
+  color: var(--text);
+  margin-bottom: 16px;
+  font-style: italic;
+}
+
+.vote-options { display: flex; flex-direction: column; gap: 10px; }
+
+.vote-option {
+  position: relative;
+  background: rgba(0,0,0,0.3);
+  border: 1px solid rgba(201,168,76,0.15);
+  border-radius: 2px;
+  padding: 12px 16px;
+  cursor: pointer;
+  transition: all 0.3s;
+  overflow: hidden;
+}
+
+.vote-option:hover { border-color: var(--gold); }
+
+.vote-option.voted {
+  border-color: var(--gold);
+  background: rgba(201,168,76,0.08);
+}
+
+.vote-bar {
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  background: linear-gradient(90deg, rgba(201,168,76,0.15), transparent);
+  transition: width 1s ease;
+  pointer-events: none;
+}
+
+.vote-option-inner {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.vote-option-text { font-size: 14px; color: var(--text); }
+.vote-pct {
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  color: var(--gold);
+  font-weight: 700;
+}
+
+.vote-count {
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  color: var(--muted);
+  text-align: right;
+  margin-top: 12px;
+  letter-spacing: 0.1em;
+}
+
+/* Second voting card */
+.track-list { display: flex; flex-direction: column; gap: 8px; }
+
+.track-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  background: rgba(0,0,0,0.3);
+  border: 1px solid rgba(201,168,76,0.1);
+  border-radius: 2px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.track-item:hover { border-color: rgba(201,168,76,0.3); }
+.track-item.top { border-color: var(--gold); background: rgba(201,168,76,0.06); }
+
+.track-rank {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 20px;
+  color: var(--gold);
+  width: 24px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.track-info { flex: 1; }
+.track-name { font-size: 13px; color: var(--text); }
+.track-artist { font-family: 'Space Mono', monospace; font-size: 9px; color: var(--muted); margin-top: 2px; }
+
+.track-votes {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+}
+
+.track-vote-count {
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  color: var(--gold);
+}
+
+.track-mini-bar {
+  width: 60px;
+  height: 3px;
+  background: rgba(201,168,76,0.15);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.track-mini-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--gold), var(--gold-light));
+  border-radius: 2px;
+  transition: width 1s ease;
+}
+
+/* ── ANALYTICS PANEL ── */
+.analytics-panel {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 28px;
+  margin-top: 24px;
+}
+
+.analytics-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.analytics-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 20px;
+  letter-spacing: 0.1em;
+  color: var(--gold-light);
+}
+
+.analytics-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+@media (max-width: 600px) { .analytics-grid { grid-template-columns: repeat(2, 1fr); } }
+
+.metric-card {
+  background: rgba(0,0,0,0.3);
+  border: 1px solid rgba(201,168,76,0.1);
+  border-radius: 2px;
+  padding: 16px;
+}
+
+.metric-value {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 32px;
+  color: var(--gold);
+  letter-spacing: 0.05em;
+  line-height: 1;
+}
+
+.metric-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 8px;
+  letter-spacing: 0.2em;
+  color: var(--muted);
+  text-transform: uppercase;
+  margin-top: 4px;
+}
+
+.metric-change {
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  color: var(--green);
+  margin-top: 6px;
+}
+
+/* Bar chart */
+.chart-container {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+  height: 80px;
+  padding-top: 8px;
+}
+
+.chart-bar-wrap { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; }
+
+.chart-bar {
+  width: 100%;
+  background: linear-gradient(180deg, var(--gold), rgba(201,168,76,0.3));
+  border-radius: 2px 2px 0 0;
+  transition: height 1s ease;
+  min-height: 4px;
+}
+
+.chart-bar-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 8px;
+  color: var(--muted);
+  letter-spacing: 0.05em;
+}
+
+/* ── FEATURES ── */
+.features {
+  padding: 100px 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-top: 48px;
+}
+
+@media (max-width: 768px) { .features-grid { grid-template-columns: 1fr; } }
+
+.feature-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 32px 28px;
+  transition: all 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+
+.feature-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.feature-card:hover { border-color: rgba(201,168,76,0.4); transform: translateY(-4px); }
+.feature-card:hover::before { opacity: 1; }
+
+.feature-icon {
+  width: 48px;
+  height: 48px;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  color: var(--gold);
+  font-size: 20px;
+}
+
+.feature-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 20px;
+  letter-spacing: 0.1em;
+  color: var(--gold-light);
+  margin-bottom: 12px;
+}
+
+.feature-desc {
+  font-size: 15px;
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+/* ── HOW IT WORKS ── */
+.how-it-works {
+  padding: 100px 40px;
+  background: rgba(201,168,76,0.02);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+.how-inner { max-width: 1200px; margin: 0 auto; }
+
+.steps {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  margin-top: 48px;
+}
+
+@media (max-width: 768px) { .steps { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 480px) { .steps { grid-template-columns: 1fr; } }
+
+.step {
+  text-align: center;
+  padding: 32px 20px;
+}
+
+.step-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 64px;
+  color: rgba(201,168,76,0.15);
+  line-height: 1;
+  margin-bottom: 16px;
+}
+
+.step-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 18px;
+  letter-spacing: 0.1em;
+  color: var(--gold-light);
+  margin-bottom: 12px;
+}
+
+.step-desc {
+  font-size: 14px;
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+/* ── CTA ── */
+.cta-section {
+  padding: 120px 40px;
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.cta-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(40px, 8vw, 72px);
+  letter-spacing: 0.08em;
+  color: var(--text);
+  line-height: 1;
+  margin-bottom: 20px;
+}
+
+.cta-title span { color: var(--gold); }
+
+.cta-sub {
+  font-size: 18px;
+  color: var(--muted);
+  font-style: italic;
+  margin-bottom: 16px;
+  line-height: 1.6;
+}
+
+.cta-contact {
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  color: var(--gold);
+  margin-bottom: 40px;
+  text-transform: uppercase;
+}
+
+/* ── FOOTER ── */
+footer {
+  border-top: 1px solid var(--border);
+  padding: 32px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: gap;
+  position: relative;
+  z-index: 1;
+}
+
+.footer-logo {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 24px;
+  letter-spacing: 0.15em;
+  color: var(--gold);
+}
+.footer-logo::after { content: '™'; font-size: 0.3em; vertical-align: super; }
+
+.footer-text {
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  color: var(--muted);
+  letter-spacing: 0.15em;
+  text-align: center;
+}
+
+.footer-confidential {
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  color: rgba(201,168,76,0.4);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+/* Scroll indicator */
+.scroll-hint {
+  position: absolute;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  opacity: 0;
+  animation: fadeUp 0.8s ease 1.2s both;
+}
+
+.scroll-hint span {
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.3em;
+  color: var(--muted);
+  text-transform: uppercase;
+}
+
+.scroll-arrow {
+  width: 1px;
+  height: 40px;
+  background: linear-gradient(180deg, var(--gold), transparent);
+  animation: scrollPulse 2s ease-in-out infinite;
+}
+
+@keyframes scrollPulse {
+  0%, 100% { opacity: 0.4; transform: scaleY(1); }
+  50% { opacity: 1; transform: scaleY(1.2); }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">DAVOTE</div>
+  <ul class="nav-links">
+    <li><a href="#demo">Live Demo</a></li>
+    <li><a href="#features">Features</a></li>
+    <li><a href="#how">How It Works</a></li>
+    <li><a href="#invest">Invest</a></li>
+  </ul>
+  <div class="nav-badge">Confidential</div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="top">
+  <div class="hero-eyebrow">Real-Time Fan Voting Platform &nbsp;·&nbsp; Investor Preview</div>
+  <div class="hero-title">DAVOTE</div>
+  <div class="hero-sub">Where Fans Vote. Artists Grow. Investors Win.</div>
+  <div class="hero-desc">The live fan engagement infrastructure the music industry has been missing</div>
+
+  <div class="hero-stats">
+    <div class="stat">
+      <div class="stat-num" id="counter1">0</div>
+      <div class="stat-label">Beta Artists</div>
+    </div>
+    <div class="divider"></div>
+    <div class="stat">
+      <div class="stat-num" id="counter2">0</div>
+      <div class="stat-label">Platform Live</div>
+    </div>
+    <div class="divider"></div>
+    <div class="stat">
+      <div class="stat-num" id="counter3">0</div>
+      <div class="stat-label">Copyright Secured</div>
+    </div>
+    <div class="divider"></div>
+    <div class="stat">
+      <div class="stat-num" id="counter4">$0</div>
+      <div class="stat-label">Raising Now</div>
+    </div>
+  </div>
+
+  <div class="hero-cta">
+    <a href="#demo" class="btn-primary">See Live Demo</a>
+    <a href="#invest" class="btn-outline">Investment Info</a>
+  </div>
+
+  <div class="scroll-hint">
+    <span>Scroll</span>
+    <div class="scroll-arrow"></div>
+  </div>
+</section>
+
+<!-- LIVE DEMO -->
+<section class="live-demo" id="demo">
+  <div class="section-label">Live Platform Demo</div>
+  <div class="section-title">REAL-TIME FAN VOTING</div>
+  <div class="section-sub">This is what fans and artists experience on DAVOTE™ — live, right now.</div>
+
+  <div class="voting-container">
+
+    <!-- Card 1: Artist Poll -->
+    <div class="voting-card">
+      <div class="voting-header">
+        <div class="voting-title">Artist Listening Party</div>
+        <div class="live-badge"><div class="live-dot"></div> Live Now</div>
+      </div>
+      <div class="voting-body">
+        <div class="artist-event">
+          <div class="artist-avatar">RS</div>
+          <div class="artist-info">
+            <h4>RYZE THE ARTIST</h4>
+            <p>New Album Drop · 1,247 fans voting</p>
+          </div>
+        </div>
+        <div class="vote-question">"Which track should drop as the next single?"</div>
+        <div class="vote-options" id="pollOptions">
+          <div class="vote-option" onclick="castVote(0)">
+            <div class="vote-bar" id="bar0" style="width:43%"></div>
+            <div class="vote-option-inner">
+              <span class="vote-option-text">Late Nights in Dallas</span>
+              <span class="vote-pct" id="pct0">43%</span>
+            </div>
+          </div>
+          <div class="vote-option" onclick="castVote(1)">
+            <div class="vote-bar" id="bar1" style="width:31%"></div>
+            <div class="vote-option-inner">
+              <span class="vote-option-text">Neon Boulevard</span>
+              <span class="vote-pct" id="pct1">31%</span>
+            </div>
+          </div>
+          <div class="vote-option" onclick="castVote(2)">
+            <div class="vote-bar" id="bar2" style="width:17%"></div>
+            <div class="vote-option-inner">
+              <span class="vote-option-text">Gold Standard</span>
+              <span class="vote-pct" id="pct2">17%</span>
+            </div>
+          </div>
+          <div class="vote-option" onclick="castVote(3)">
+            <div class="vote-bar" id="bar3" style="width:9%"></div>
+            <div class="vote-option-inner">
+              <span class="vote-option-text">Frequency</span>
+              <span class="vote-pct" id="pct3">9%</span>
+            </div>
+          </div>
+        </div>
+        <div class="vote-count" id="voteCount">1,247 votes cast · Updates every 3 seconds</div>
+      </div>
+    </div>
+
+    <!-- Card 2: Setlist Voting -->
+    <div class="voting-card">
+      <div class="voting-header">
+        <div class="voting-title">Setlist Vote</div>
+        <div class="live-badge"><div class="live-dot"></div> Live Now</div>
+      </div>
+      <div class="voting-body">
+        <div class="artist-event">
+          <div class="artist-avatar" style="background: linear-gradient(135deg, #5A9AE0, #1a3a6a);">KV</div>
+          <div class="artist-info">
+            <h4>KORI VANCE</h4>
+            <p>Tour Set · Vote Your Favorites · 892 fans</p>
+          </div>
+        </div>
+        <div class="vote-question">"Fan-voted setlist for tonight's show:"</div>
+        <div class="track-list" id="trackList">
+          <div class="track-item top">
+            <div class="track-rank">1</div>
+            <div class="track-info">
+              <div class="track-name">Midnight Run</div>
+              <div class="track-artist">Kori Vance · 2024</div>
+            </div>
+            <div class="track-votes">
+              <div class="track-vote-count" id="tv0">412</div>
+              <div class="track-mini-bar"><div class="track-mini-fill" style="width:92%"></div></div>
+            </div>
+          </div>
+          <div class="track-item">
+            <div class="track-rank">2</div>
+            <div class="track-info">
+              <div class="track-name">Déjà Blue</div>
+              <div class="track-artist">Kori Vance · 2023</div>
+            </div>
+            <div class="track-votes">
+              <div class="track-vote-count" id="tv1">289</div>
+              <div class="track-mini-bar"><div class="track-mini-fill" style="width:64%"></div></div>
+            </div>
+          </div>
+          <div class="track-item">
+            <div class="track-rank">3</div>
+            <div class="track-info">
+              <div class="track-name">Falling Forward</div>
+              <div class="track-artist">Kori Vance · 2024</div>
+            </div>
+            <div class="track-votes">
+              <div class="track-vote-count" id="tv2">178</div>
+              <div class="track-mini-bar"><div class="track-mini-fill" style="width:40%"></div></div>
+            </div>
+          </div>
+          <div class="track-item">
+            <div class="track-rank">4</div>
+            <div class="track-info">
+              <div class="track-name">Golden Hour</div>
+              <div class="track-artist">Kori Vance · 2022</div>
+            </div>
+            <div class="track-votes">
+              <div class="track-vote-count" id="tv3">134</div>
+              <div class="track-mini-bar"><div class="track-mini-fill" style="width:30%"></div></div>
+            </div>
+          </div>
+          <div class="track-item">
+            <div class="track-rank">5</div>
+            <div class="track-info">
+              <div class="track-name">Higher Ground</div>
+              <div class="track-artist">Kori Vance · 2023</div>
+            </div>
+            <div class="track-votes">
+              <div class="track-vote-count" id="tv4">98</div>
+              <div class="track-mini-bar"><div class="track-mini-fill" style="width:22%"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Analytics Panel -->
+  <div class="analytics-panel reveal">
+    <div class="analytics-header">
+      <div class="analytics-title">Real-Time Artist Dashboard</div>
+      <div class="live-badge"><div class="live-dot"></div> Live Data</div>
+    </div>
+    <div class="analytics-grid">
+      <div class="metric-card">
+        <div class="metric-value" id="m1">2,139</div>
+        <div class="metric-label">Active Fans</div>
+        <div class="metric-change">↑ +12% this hour</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-value" id="m2">4,847</div>
+        <div class="metric-label">Votes Cast Today</div>
+        <div class="metric-change">↑ +34% vs last event</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-value" id="m3">8.4m</div>
+        <div class="metric-label">Engagement Score</div>
+        <div class="metric-change">↑ Top 3% of platform</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-value" id="m4">94%</div>
+        <div class="metric-label">Fan Retention</div>
+        <div class="metric-change">↑ +7% this month</div>
+      </div>
+    </div>
+    <div class="chart-container" id="chartBars"></div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="features" id="features">
+  <div class="section-label">Platform Capabilities</div>
+  <div class="section-title reveal">WHAT DAVOTE™ DOES</div>
+  <div class="section-sub reveal">Six revenue-generating features in one platform</div>
+
+  <div class="features-grid">
+    <div class="feature-card reveal">
+      <div class="feature-icon">🗳</div>
+      <div class="feature-title">Real-Time Fan Voting</div>
+      <div class="feature-desc">Fans vote live during listening parties, album drops, and tour announcements. Results update instantly — no refresh needed.</div>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feature-icon">📊</div>
+      <div class="feature-title">Artist Analytics Dashboard</div>
+      <div class="feature-desc">Artists and labels see exactly what fans want — by track, by market, by demographic. Data that drives smarter A&R decisions.</div>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feature-icon">🎵</div>
+      <div class="feature-title">Setlist & Single Selection</div>
+      <div class="feature-desc">Let fans vote on what gets played at the next show or what drops as the next single. Fan demand becomes a marketing tool.</div>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feature-icon">💰</div>
+      <div class="feature-title">Monetized Voting Events</div>
+      <div class="feature-desc">Artists host premium voting events. Fans pay to participate. Multiple revenue streams for artists and the platform.</div>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feature-icon">🔐</div>
+      <div class="feature-title">Label & Brand Integration</div>
+      <div class="feature-desc">Labels embed DAVOTE™ into campaigns. Brands sponsor voting events. Enterprise API for enterprise deals.</div>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feature-icon">📱</div>
+      <div class="feature-title">Mobile-First Platform</div>
+      <div class="feature-desc">Built for fans on the go. Works on any device, any browser. No app download required. Instant access via link.</div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how-it-works" id="how">
+  <div class="how-inner">
+    <div class="section-label">The Process</div>
+    <div class="section-title reveal">HOW IT WORKS</div>
+    <div class="section-sub reveal">Four steps from setup to insight</div>
+    <div class="steps">
+      <div class="step reveal">
+        <div class="step-num">01</div>
+        <div class="step-title">Artist Onboards</div>
+        <div class="step-desc">Artist or label sets up their DAVOTE™ profile and creates their first voting event in minutes.</div>
+      </div>
+      <div class="step reveal">
+        <div class="step-num">02</div>
+        <div class="step-title">Fans Get the Link</div>
+        <div class="step-desc">Artist shares the event link via social media, email, or at the listening party. Fans click — no download needed.</div>
+      </div>
+      <div class="step reveal">
+        <div class="step-num">03</div>
+        <div class="step-title">Fans Vote Live</div>
+        <div class="step-desc">Fans cast votes in real time. Results update instantly. The crowd's voice shapes the moment.</div>
+      </div>
+      <div class="step reveal">
+        <div class="step-num">04</div>
+        <div class="step-title">Artist Gets Data</div>
+        <div class="step-desc">The artist and label see exactly what fans want. Real data. Real decisions. Real growth.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INVEST CTA -->
+<section id="invest">
+  <div class="cta-section reveal">
+    <div class="section-label">Investment Opportunity</div>
+    <div class="cta-title">READY TO BE <span>PART OF THIS?</span></div>
+    <div class="cta-sub">DAVOTE™ is in its early investor stage. We are building the fan engagement infrastructure that the music industry has never had. The opportunity to get in at the ground floor is now.</div>
+    <div class="cta-contact">Roniel Sylvester · Founder · workwithroniel.com · 414.616.7885</div>
+    <div class="hero-cta">
+      <a href="mailto:roniel@workwithroniel.com?subject=DAVOTE Investment Inquiry" class="btn-primary">Request Pitch Deck</a>
+      <a href="tel:4146167885" class="btn-outline">Schedule a Call</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">DAVOTE</div>
+  <div class="footer-text">© 2025 Sylvester Media Group LLC · All Rights Reserved<br>davote.app · workwithroniel.com</div>
+  <div class="footer-confidential">Confidential · NDA Protected</div>
+</footer>
+
+<script>
+// ── COUNTERS ──
+function animateCounter(id, target, prefix='', suffix='', duration=2000) {
+  const el = document.getElementById(id);
+  const start = Date.now();
+  const update = () => {
+    const elapsed = Date.now() - start;
+    const progress = Math.min(elapsed / duration, 1);
+    const ease = 1 - Math.pow(1 - progress, 3);
+    const val = Math.floor(ease * target);
+    el.textContent = prefix + (val >= 1000 ? val.toLocaleString() : val) + suffix;
+    if (progress < 1) requestAnimationFrame(update);
+  };
+  requestAnimationFrame(update);
+}
+
+setTimeout(() => {
+  animateCounter('counter1', 2);
+  animateCounter('counter2', 1, '', ' ✓');
+  animateCounter('counter3', 1, '', ' ✓');
+  animateCounter('counter4', 150, '$', 'K');
+}, 800);
+
+// ── VOTING SIMULATION ──
+let votes = [43, 31, 17, 9];
+let totalVotes = 1247;
+let hasVoted = false;
+
+function castVote(idx) {
+  if (hasVoted) return;
+  hasVoted = true;
+  votes[idx] += 5;
+  totalVotes += 1;
+  const total = votes.reduce((a,b) => a+b, 0);
+  votes.forEach((v,i) => {
+    const pct = Math.round((v/total)*100);
+    document.getElementById('bar'+i).style.width = pct+'%';
+    document.getElementById('pct'+i).textContent = pct+'%';
+    document.querySelectorAll('.vote-option')[i].classList.toggle('voted', i === idx);
+  });
+  document.getElementById('voteCount').textContent = totalVotes.toLocaleString() + ' votes cast · Thank you for voting!';
+}
+
+// Live vote simulation
+setInterval(() => {
+  if (hasVoted) return;
+  const rand = Math.floor(Math.random() * 4);
+  votes[rand] += Math.floor(Math.random() * 3) + 1;
+  totalVotes += Math.floor(Math.random() * 3) + 1;
+  const total = votes.reduce((a,b) => a+b, 0);
+  votes.forEach((v,i) => {
+    const pct = Math.round((v/total)*100);
+    document.getElementById('bar'+i).style.width = pct+'%';
+    document.getElementById('pct'+i).textContent = pct+'%';
+  });
+  document.getElementById('voteCount').textContent = totalVotes.toLocaleString() + ' votes cast · Updates every 3 seconds';
+}, 3000);
+
+// Track vote simulation
+let trackVotes = [412, 289, 178, 134, 98];
+setInterval(() => {
+  const rand = Math.floor(Math.random() * 5);
+  trackVotes[rand] += Math.floor(Math.random() * 4) + 1;
+  trackVotes.forEach((v,i) => {
+    document.getElementById('tv'+i).textContent = v.toLocaleString();
+  });
+}, 2500);
+
+// ── CHART ──
+const chartData = [
+  {label:'Mon', h:35}, {label:'Tue', h:52}, {label:'Wed', h:44},
+  {label:'Thu', h:68}, {label:'Fri', h:85}, {label:'Sat', h:92}, {label:'Sun', h:78}
+];
+const chartEl = document.getElementById('chartBars');
+chartData.forEach(d => {
+  const wrap = document.createElement('div');
+  wrap.className = 'chart-bar-wrap';
+  const bar = document.createElement('div');
+  bar.className = 'chart-bar';
+  bar.style.height = '0px';
+  const label = document.createElement('div');
+  label.className = 'chart-bar-label';
+  label.textContent = d.label;
+  wrap.appendChild(bar);
+  wrap.appendChild(label);
+  chartEl.appendChild(wrap);
+  setTimeout(() => { bar.style.height = d.h * 0.8 + 'px'; }, 500);
+});
+
+// Live metric updates
+setInterval(() => {
+  const m1 = document.getElementById('m1');
+  const current = parseInt(m1.textContent.replace(',',''));
+  m1.textContent = (current + Math.floor(Math.random()*3)).toLocaleString();
+  const m2 = document.getElementById('m2');
+  const c2 = parseInt(m2.textContent.replace(',',''));
+  m2.textContent = (c2 + Math.floor(Math.random()*5)).toLocaleString();
+}, 4000);
+
+// ── SCROLL REVEAL ──
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      observer.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.15 });
+
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>

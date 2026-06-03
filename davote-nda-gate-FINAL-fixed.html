@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DAVOTE™ — Confidential Demo Access</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&family=Bebas+Neue&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #C9A84C;
+    --gold-light: #E8C96A;
+    --gold-dim: rgba(201,168,76,0.15);
+    --black: #080808;
+    --dark: #0f0f0f;
+    --card: #141414;
+    --border: rgba(201,168,76,0.25);
+    --text: #e8e0d0;
+    --muted: rgba(232,224,208,0.45);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--black);
+    color: var(--text);
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+  }
+
+  /* Animated background */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 50% at 50% -10%, rgba(201,168,76,0.08) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 40% at 90% 90%, rgba(201,168,76,0.04) 0%, transparent 60%),
+      repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 80px,
+        rgba(201,168,76,0.015) 80px,
+        rgba(201,168,76,0.015) 81px
+      ),
+      repeating-linear-gradient(
+        90deg,
+        transparent,
+        transparent 80px,
+        rgba(201,168,76,0.015) 80px,
+        rgba(201,168,76,0.015) 81px
+      );
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Floating orb */
+  .orb {
+    position: fixed;
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(201,168,76,0.06) 0%, transparent 70%);
+    top: -200px;
+    left: 50%;
+    transform: translateX(-50%);
+    animation: pulse 8s ease-in-out infinite;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  @keyframes pulse {
+    0%, 100% { transform: translateX(-50%) scale(1); opacity: 1; }
+    50% { transform: translateX(-50%) scale(1.2); opacity: 0.6; }
+  }
+
+  .container {
+    position: relative;
+    z-index: 1;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+  }
+
+  /* Logo area */
+  .logo-area {
+    text-align: center;
+    margin-bottom: 48px;
+    animation: fadeDown 0.8s ease both;
+  }
+
+  .logo-wordmark {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(64px, 12vw, 96px);
+    letter-spacing: 0.15em;
+    color: var(--gold);
+    line-height: 1;
+    text-shadow: 0 0 60px rgba(201,168,76,0.3), 0 0 120px rgba(201,168,76,0.1);
+    position: relative;
+  }
+
+  .logo-wordmark::after {
+    content: '™';
+    font-size: 0.25em;
+    vertical-align: super;
+    letter-spacing: 0;
+    color: var(--gold-light);
+  }
+
+  .logo-tagline {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.4em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-top: 8px;
+  }
+
+  /* Gold divider */
+  .divider {
+    width: 120px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    margin: 20px auto;
+  }
+
+  /* Main card */
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    width: 100%;
+    max-width: 680px;
+    overflow: hidden;
+    animation: fadeUp 0.8s ease 0.2s both;
+    box-shadow: 0 0 80px rgba(0,0,0,0.8), 0 0 0 1px rgba(201,168,76,0.05);
+  }
+
+  .card-header {
+    background: linear-gradient(135deg, rgba(201,168,76,0.12), rgba(201,168,76,0.04));
+    border-bottom: 1px solid var(--border);
+    padding: 28px 40px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .lock-icon {
+    width: 36px;
+    height: 36px;
+    border: 1.5px solid var(--gold);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    color: var(--gold);
+    font-size: 14px;
+  }
+
+  .card-header-text h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    letter-spacing: 0.15em;
+    color: var(--gold-light);
+    font-weight: 400;
+  }
+
+  .card-header-text p {
+    font-size: 13px;
+    color: var(--muted);
+    margin-top: 2px;
+    font-style: italic;
+  }
+
+  .card-body {
+    padding: 40px;
+  }
+
+  /* NDA scroll box */
+  .nda-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.35em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  .nda-box {
+    background: rgba(0,0,0,0.4);
+    border: 1px solid rgba(201,168,76,0.15);
+    border-radius: 2px;
+    padding: 24px;
+    height: 220px;
+    overflow-y: auto;
+    font-size: 13px;
+    line-height: 1.8;
+    color: rgba(232,224,208,0.7);
+    margin-bottom: 28px;
+    scrollbar-width: thin;
+    scrollbar-color: var(--gold) transparent;
+  }
+
+  .nda-box::-webkit-scrollbar { width: 4px; }
+  .nda-box::-webkit-scrollbar-track { background: transparent; }
+  .nda-box::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 2px; }
+
+  .nda-box h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 16px;
+    letter-spacing: 0.15em;
+    color: var(--gold-light);
+    margin-bottom: 16px;
+    font-weight: 400;
+  }
+
+  .nda-box p { margin-bottom: 12px; }
+  .nda-box strong { color: var(--text); font-style: normal; }
+
+  /* Form fields */
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+
+  @media (max-width: 520px) {
+    .form-row { grid-template-columns: 1fr; }
+    .card-body { padding: 24px; }
+    .card-header { padding: 20px 24px; }
+  }
+
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .field label {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    color: var(--gold);
+    text-transform: uppercase;
+  }
+
+  .field input {
+    background: rgba(0,0,0,0.5);
+    border: 1px solid rgba(201,168,76,0.2);
+    border-radius: 2px;
+    padding: 12px 16px;
+    color: var(--text);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 15px;
+    outline: none;
+    transition: border-color 0.3s, box-shadow 0.3s;
+    width: 100%;
+  }
+
+  .field input::placeholder { color: var(--muted); font-style: italic; }
+
+  .field input:focus {
+    border-color: var(--gold);
+    box-shadow: 0 0 0 3px rgba(201,168,76,0.08);
+  }
+
+  /* Company field full width */
+  .field-full { margin-bottom: 16px; }
+
+  /* Checkbox */
+  .agree-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    margin: 24px 0;
+    padding: 20px;
+    background: rgba(201,168,76,0.04);
+    border: 1px solid rgba(201,168,76,0.12);
+    border-radius: 2px;
+    cursor: pointer;
+  }
+
+  .agree-row input[type="checkbox"] {
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    min-width: 20px;
+    border: 1.5px solid var(--gold);
+    border-radius: 2px;
+    background: transparent;
+    cursor: pointer;
+    position: relative;
+    margin-top: 2px;
+    transition: background 0.2s;
+  }
+
+  .agree-row input[type="checkbox"]:checked {
+    background: var(--gold);
+  }
+
+  .agree-row input[type="checkbox"]:checked::after {
+    content: '';
+    position: absolute;
+    top: 3px;
+    left: 6px;
+    width: 5px;
+    height: 9px;
+    border: 2px solid var(--black);
+    border-top: none;
+    border-left: none;
+    transform: rotate(45deg);
+  }
+
+  .agree-text {
+    font-size: 13px;
+    line-height: 1.7;
+    color: var(--muted);
+  }
+
+  .agree-text strong { color: var(--text); }
+
+  /* Submit button */
+  .btn-access {
+    width: 100%;
+    padding: 18px 32px;
+    background: linear-gradient(135deg, var(--gold), #a8862e);
+    border: none;
+    border-radius: 2px;
+    color: var(--black);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 18px;
+    letter-spacing: 0.25em;
+    cursor: pointer;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .btn-access::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.15), transparent);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .btn-access:hover::before { opacity: 1; }
+  .btn-access:hover { box-shadow: 0 0 30px rgba(201,168,76,0.4); transform: translateY(-1px); }
+  .btn-access:active { transform: translateY(0); }
+  .btn-access:disabled {
+    background: rgba(201,168,76,0.2);
+    color: var(--muted);
+    cursor: not-allowed;
+    box-shadow: none;
+    transform: none;
+  }
+
+  /* Footer note */
+  .footer-note {
+    text-align: center;
+    margin-top: 28px;
+    font-size: 12px;
+    color: var(--muted);
+    font-style: italic;
+    animation: fadeUp 0.8s ease 0.4s both;
+  }
+
+  .footer-note span {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--gold);
+    letter-spacing: 0.1em;
+    font-style: normal;
+  }
+
+  /* Timestamp display */
+  .timestamp {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    margin-top: 12px;
+    text-align: center;
+  }
+
+  /* Success state */
+  .success-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: var(--black);
+    z-index: 100;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    padding: 40px;
+  }
+
+  .success-overlay.show { display: flex; animation: fadeIn 0.6s ease both; }
+
+  .success-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 72px;
+    color: var(--gold);
+    letter-spacing: 0.15em;
+    text-shadow: 0 0 60px rgba(201,168,76,0.4);
+    margin-bottom: 8px;
+  }
+
+  .success-logo::after { content: '™'; font-size: 0.25em; vertical-align: super; }
+
+  .success-msg {
+    font-size: clamp(18px, 4vw, 26px);
+    color: var(--text);
+    margin: 24px 0 12px;
+    font-weight: 300;
+  }
+
+  .success-sub {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 40px;
+  }
+
+  .progress-bar {
+    width: 280px;
+    height: 2px;
+    background: rgba(201,168,76,0.15);
+    border-radius: 1px;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--gold), var(--gold-light));
+    width: 0%;
+    animation: progress 3s ease forwards 0.5s;
+  }
+
+  @keyframes progress { to { width: 100%; } }
+
+  /* Error state */
+  .error-msg {
+    display: none;
+    background: rgba(255,60,60,0.08);
+    border: 1px solid rgba(255,60,60,0.2);
+    border-radius: 2px;
+    padding: 12px 16px;
+    font-size: 13px;
+    color: #ff8080;
+    margin-top: 12px;
+    text-align: center;
+  }
+
+  /* Animations */
+  @keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  /* Scan line effect */
+  .card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    animation: scan 4s ease-in-out infinite;
+    pointer-events: none;
+  }
+
+  .card { position: relative; }
+
+  @keyframes scan {
+    0% { top: 0; opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    100% { top: 100%; opacity: 0; }
+  }
+</style>
+</head>
+<body>
+
+<div class="orb"></div>
+
+<!-- Success overlay -->
+<div class="success-overlay" id="successOverlay">
+  <div class="success-logo">DAVOTE</div>
+  <div class="divider"></div>
+  <div class="success-msg">NDA Accepted. Welcome to the Demo.</div>
+  <div class="success-sub">Redirecting you now...</div>
+  <div class="progress-bar"><div class="progress-fill"></div></div>
+</div>
+
+<div class="container">
+
+  <div class="logo-area">
+    <div class="logo-wordmark">DAVOTE</div>
+    <div class="divider"></div>
+    <div class="logo-tagline">Real-Time Fan Voting Platform &nbsp;·&nbsp; Confidential Demo</div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="lock-icon">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+          <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+        </svg>
+      </div>
+      <div class="card-header-text">
+        <h2>Confidential Demo Access</h2>
+        <p>Non-Disclosure Agreement Required to Proceed</p>
+      </div>
+    </div>
+
+    <div class="card-body">
+
+      <div class="nda-label">Non-Disclosure Agreement</div>
+
+      <div class="nda-box" id="ndaBox">
+        <h3>DAVOTE™ Mutual Non-Disclosure Agreement</h3>
+
+        <p>This Non-Disclosure Agreement ("Agreement") is entered into as of the date of electronic acceptance below, between <strong>Sylvester Media Group LLC d/b/a DAVOTE™</strong> ("Disclosing Party"), and the individual or entity accessing this demo ("Receiving Party").</p>
+
+        <p><strong>1. Confidential Information.</strong> "Confidential Information" means any non-public information disclosed by DAVOTE™ in connection with this demo, including but not limited to: platform architecture, product features, business strategy, financial data, user data, artist partnerships, investor information, technical specifications, and any other proprietary information, whether disclosed orally, visually, or in writing.</p>
+
+        <p><strong>2. Obligations.</strong> The Receiving Party agrees to: (a) hold all Confidential Information in strict confidence; (b) not disclose Confidential Information to any third party without prior written consent from DAVOTE™; (c) use Confidential Information solely for the purpose of evaluating a potential business relationship with DAVOTE™; (d) not reverse engineer, copy, or replicate any portion of the DAVOTE™ platform.</p>
+
+        <p><strong>3. Term.</strong> This Agreement shall remain in effect for a period of three (3) years from the date of acceptance, unless terminated earlier in writing by mutual consent.</p>
+
+        <p><strong>4. Exclusions.</strong> This Agreement does not apply to information that: (a) is or becomes publicly known through no breach by Receiving Party; (b) was rightfully in the Receiving Party's possession prior to disclosure; (c) is required to be disclosed by law or court order, provided that Receiving Party gives DAVOTE™ prompt written notice.</p>
+
+        <p><strong>5. Intellectual Property.</strong> Nothing in this Agreement grants the Receiving Party any license, ownership rights, or interest in DAVOTE™'s intellectual property, trademarks, copyrights, patents, or trade secrets.</p>
+
+        <p><strong>6. No Solicitation.</strong> During the term of this Agreement and for one (1) year thereafter, Receiving Party agrees not to solicit, recruit, or hire any employees, contractors, or artists affiliated with DAVOTE™.</p>
+
+        <p><strong>7. Remedies.</strong> Receiving Party acknowledges that any breach of this Agreement may cause irreparable harm to DAVOTE™ for which monetary damages may be inadequate, and that DAVOTE™ shall be entitled to seek equitable relief in addition to all other remedies available at law.</p>
+
+        <p><strong>8. Governing Law.</strong> This Agreement shall be governed by the laws of the State of Texas, without regard to conflicts of law principles.</p>
+
+        <p><strong>9. Electronic Acceptance.</strong> By submitting this form, Receiving Party agrees that their electronic acceptance constitutes a legally binding signature and full agreement to the terms above. A timestamped record of this acceptance will be retained by DAVOTE™.</p>
+
+        <p><em>For questions regarding this Agreement, contact: <strong>roniel@workwithroniel.com</strong></em></p>
+      </div>
+
+      <form id="ndaForm" onsubmit="handleSubmit(event)">
+
+        <div class="form-row">
+          <div class="field">
+            <label>First Name</label>
+            <input type="text" id="firstName" placeholder="Your first name" required autocomplete="given-name">
+          </div>
+          <div class="field">
+            <label>Last Name</label>
+            <input type="text" id="lastName" placeholder="Your last name" required autocomplete="family-name">
+          </div>
+        </div>
+
+        <div class="field field-full">
+          <label>Email Address</label>
+          <input type="email" id="email" placeholder="your@email.com" required autocomplete="email">
+        </div>
+
+        <div class="field field-full">
+          <label>Company / Organization</label>
+          <input type="text" id="company" placeholder="Your company or fund name" autocomplete="organization">
+        </div>
+
+        <div class="agree-row" onclick="toggleCheck()">
+          <input type="checkbox" id="agreeCheck" required>
+          <div class="agree-text">
+            I have read and fully understand the DAVOTE™ Non-Disclosure Agreement above. I agree to be legally bound by its terms. I understand that my name, email, company, and the timestamp of this acceptance will be recorded. <strong>By proceeding, I accept all terms of this Agreement.</strong>
+          </div>
+        </div>
+
+        <div class="timestamp" id="timestamp"></div>
+
+        <div class="error-msg" id="errorMsg">Please complete all required fields and accept the NDA to continue.</div>
+
+        <button type="submit" class="btn-access" id="submitBtn" disabled>
+          ACCEPT NDA &amp; ACCESS DEMO
+        </button>
+
+      </form>
+
+    </div>
+  </div>
+
+  <div class="footer-note">
+    This demo is for authorized recipients only &nbsp;·&nbsp; <span>DAVOTE™</span> &nbsp;·&nbsp; All content is proprietary and confidential<br>
+    <span style="font-family:inherit;font-size:11px;letter-spacing:0;font-style:italic;color:rgba(232,224,208,0.3);">© 2025 Sylvester Media Group LLC. All rights reserved.</span>
+  </div>
+
+</div>
+
+<!-- Formspree endpoint — replace YOUR_FORM_ID with your actual Formspree ID -->
+<form id="formspreeForm" action="https://formspree.io/f/maqzwezr" method="POST" style="display:none;">
+  <input type="text" name="firstName" id="fs_firstName">
+  <input type="text" name="lastName" id="fs_lastName">
+  <input type="email" name="email" id="fs_email">
+  <input type="text" name="company" id="fs_company">
+  <input type="text" name="timestamp" id="fs_timestamp">
+  <input type="text" name="agreement" value="DAVOTE NDA Accepted">
+  <input type="text" name="_subject" value="DAVOTE NDA Signed — New Demo Access">
+</form>
+
+<script>
+  // Show timestamp
+  function updateTimestamp() {
+    const now = new Date();
+    const ts = now.toUTCString();
+    document.getElementById('timestamp').textContent = 'Agreement timestamp: ' + ts;
+  }
+  updateTimestamp();
+  setInterval(updateTimestamp, 1000);
+
+  // Enable button only when checkbox checked + fields filled
+  function toggleCheck() {
+    const cb = document.getElementById('agreeCheck');
+    cb.checked = !cb.checked;
+    validateForm();
+  }
+
+  function validateForm() {
+    const fn = document.getElementById('firstName').value.trim();
+    const ln = document.getElementById('lastName').value.trim();
+    const em = document.getElementById('email').value.trim();
+    const cb = document.getElementById('agreeCheck').checked;
+    const btn = document.getElementById('submitBtn');
+    btn.disabled = !(fn && ln && em && cb);
+  }
+
+  document.querySelectorAll('#ndaForm input[type="text"], #ndaForm input[type="email"]')
+    .forEach(el => el.addEventListener('input', validateForm));
+
+  document.getElementById('agreeCheck').addEventListener('change', validateForm);
+
+  // ─── CONFIGURE THIS ───────────────────────────────────
+  // Replace with your actual demo URL
+  const DEMO_URL = 'davote-demo.html';
+  // ──────────────────────────────────────────────────────
+
+  function handleSubmit(e) {
+    e.preventDefault();
+
+    const fn = document.getElementById('firstName').value.trim();
+    const ln = document.getElementById('lastName').value.trim();
+    const em = document.getElementById('email').value.trim();
+    const co = document.getElementById('company').value.trim();
+    const ts = document.getElementById('timestamp').textContent;
+
+    if (!fn || !ln || !em || !document.getElementById('agreeCheck').checked) {
+      document.getElementById('errorMsg').style.display = 'block';
+      return;
+    }
+
+    document.getElementById('errorMsg').style.display = 'none';
+
+    // Populate and submit Formspree form
+    document.getElementById('fs_firstName').value = fn;
+    document.getElementById('fs_lastName').value = ln;
+    document.getElementById('fs_email').value = em;
+    document.getElementById('fs_company').value = co;
+    document.getElementById('fs_timestamp').value = ts;
+
+    // Submit silently via fetch
+    const formData = new FormData(document.getElementById('formspreeForm'));
+    fetch(document.getElementById('formspreeForm').action, {
+      method: 'POST',
+      body: formData,
+      headers: { 'Accept': 'application/json' }
+    });
+
+    // Show success + redirect
+    document.getElementById('successOverlay').classList.add('show');
+
+    setTimeout(() => {
+      window.location.href = DEMO_URL;
+    }, 3500);
+  }
+</script>
+
+</body>
+</html>

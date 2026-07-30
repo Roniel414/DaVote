@@ -465,8 +465,19 @@
     document.querySelectorAll('.plan-section').forEach(s => s.classList.remove('active'));
     document.querySelectorAll('.plan-tab').forEach(t => t.classList.remove('active'));
     document.getElementById('plan-' + plan).classList.add('active');
-    event.target.classList.add('active');
+    if (event && event.target) event.target.classList.add('active');
   }
+
+  function selectPlanFromHash() {
+    const plan = (location.hash || '').replace('#', '');
+    const valid = ['starter', 'pro', 'label'];
+    if (!valid.includes(plan)) return;
+    document.querySelectorAll('.plan-section').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.plan-tab').forEach(t => t.classList.remove('active'));
+    document.getElementById('plan-' + plan).classList.add('active');
+    document.querySelectorAll('.plan-tab')[valid.indexOf(plan)].classList.add('active');
+  }
+  selectPlanFromHash();
 
   function submitForm(e, plan) {
     e.preventDefault();

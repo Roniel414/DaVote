@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DAVOTE™ — Complete Your Setup</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #0A0A0A;
+    --black-border: #262626;
+    --white: #F5F5F5;
+    --gray: #8A8A8A;
+    --gold: #D4AF37;
+    --gold-light: #E8C85A;
+    --green: #00E87A;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'Barlow', sans-serif;
+    line-height: 1.5;
+  }
+  a { color: var(--gold); }
+
+  /* ── HEADER ── */
+  .header {
+    text-align: center;
+    padding: 48px 24px 32px;
+    border-bottom: 1px solid var(--black-border);
+  }
+  .logo {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 32px;
+    letter-spacing: 2px;
+    color: var(--white);
+  }
+  .logo span { color: var(--gold); }
+  .header-sub {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 13px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gray);
+    margin-top: 6px;
+  }
+  .header-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 28px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-top: 24px;
+  }
+  .header-desc {
+    max-width: 480px;
+    margin: 10px auto 0;
+    color: var(--gray);
+    font-size: 15px;
+  }
+
+  /* ── PLAN TABS ── */
+  .plan-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    padding: 28px 24px 0;
+  }
+  .plan-tab {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    background: transparent;
+    border: 1px solid var(--black-border);
+    color: var(--gray);
+    padding: 12px 22px;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .plan-tab.active, .plan-tab:hover {
+    border-color: var(--gold);
+    color: var(--gold);
+  }
+
+  .plan-section { display: none; max-width: 560px; margin: 0 auto; padding: 32px 24px 64px; }
+  .plan-section.active { display: block; }
+
+  .plan-header { text-align: center; margin-bottom: 28px; }
+  .plan-name {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 24px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--white);
+  }
+  .plan-price { color: var(--gold); font-weight: 600; font-size: 16px; margin-top: 6px; }
+  .plan-includes { color: var(--gray); font-size: 14px; margin-top: 8px; }
+
+  .steps { display: flex; flex-direction: column; gap: 8px; }
+  .step-card {
+    border: 1px solid var(--black-border);
+    padding: 22px;
+    border-radius: 4px;
+    background: #101010;
+  }
+  .step-number {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gray);
+  }
+  .step-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 20px;
+    letter-spacing: 0.5px;
+    margin: 4px 0 8px;
+  }
+  .step-desc { color: var(--gray); font-size: 14px; margin-bottom: 14px; }
+  .step-note {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 12px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--gray);
+    text-align: center;
+    margin-top: 10px;
+  }
+  .step-arrow { text-align: center; color: var(--black-border); font-size: 20px; }
+
+  .pay-btn {
+    display: block;
+    text-align: center;
+    text-decoration: none;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 16px;
+    border-radius: 2px;
+    transition: all 0.2s;
+  }
+  .pay-btn-gold { background: var(--gold); color: var(--black); }
+  .pay-btn-gold:hover { background: var(--gold-light); }
+  .pay-btn-green { background: var(--green); color: var(--black); }
+  .pay-btn-green:hover { opacity: 0.85; }
+
+  .what-you-get {
+    margin-top: 24px;
+    padding: 20px;
+    border: 1px solid var(--black-border);
+    border-radius: 4px;
+  }
+  .wyg-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 10px;
+  }
+  .wyg-list { list-style: none; color: var(--white); font-size: 14px; }
+  .wyg-list li { padding: 4px 0; }
+  .wyg-list li::before { content: "✓  "; color: var(--green); }
+
+  .intake-section { margin-top: 32px; }
+  .intake-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 18px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .intake-desc { color: var(--gray); font-size: 14px; margin-bottom: 16px; }
+
+  .intake-form { display: flex; flex-direction: column; gap: 12px; }
+  .intake-form input, .intake-form select, .intake-form textarea {
+    width: 100%;
+    background: #0A0A0A;
+    border: 1px solid var(--black-border);
+    color: var(--white);
+    font-family: 'Barlow', sans-serif;
+    font-size: 14px;
+    padding: 12px 16px;
+    border-radius: 2px;
+    outline: none;
+    appearance: none;
+  }
+  .intake-form textarea { min-height: 90px; resize: vertical; }
+
+  .submit-btn {
+    display: block;
+    width: 100%;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    padding: 16px;
+    text-align: center;
+    background: var(--gold);
+    color: var(--black);
+    border: none;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-top: 8px;
+  }
+  .submit-btn:hover { background: var(--gold-light); }
+
+  .success-msg {
+    display: none;
+    text-align: center;
+    padding: 24px;
+    background: rgba(0,232,122,0.05);
+    border: 1px solid var(--green);
+    margin-top: 16px;
+    border-radius: 4px;
+  }
+  .success-msg .check { font-size: 32px; margin-bottom: 8px; }
+  .success-msg p {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 14px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--green);
+  }
+
+  /* ── FOOTER ── */
+  .footer {
+    text-align: center;
+    padding: 32px 24px;
+    border-top: 1px solid var(--black-border);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gray);
+  }
+  .footer a { color: var(--gold); text-decoration: none; }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="logo">DA<span>VOTE</span>™</div>
+  <div class="header-sub">Sylvester Enterprises · davote.app · 414.616.7885</div>
+  <div class="header-title">Complete Your Setup</div>
+  <p class="header-desc">Two quick steps and you're live. Select your plan below, complete both payments — the one-time setup fee, then your monthly plan — and fill out your artist intake form so we can build your platform.</p>
+</div>
+
+<!-- PLAN TABS -->
+<div class="plan-tabs">
+  <button class="plan-tab active" onclick="showPlan('starter')">Starter — $29/mo</button>
+  <button class="plan-tab" onclick="showPlan('pro')">Pro — $79/mo</button>
+  <button class="plan-tab" onclick="showPlan('label')">Label — $299/mo</button>
+</div>
+
+<!-- ════════════ STARTER ════════════ -->
+<div class="plan-section active" id="plan-starter">
+  <div class="plan-header">
+    <div class="plan-name">Starter Plan</div>
+    <div class="plan-price">$99 One-Time Setup Fee + $29/month</div>
+    <p class="plan-includes">1 event/month · Up to 500 fans · Full voting dashboard · QR code · Branded fan page</p>
+  </div>
+
+  <div class="steps">
+    <div class="step-card step-1">
+      <div class="step-number">Step 1 of 2</div>
+      <div class="step-title">Pay Setup Fee</div>
+      <p class="step-desc">The one-time <strong>$99 setup fee</strong> covers your complete DAVOTE build — voting app, Firebase database, Netlify deploy, QR code, and fan link.</p>
+      <a href="https://square.link/u/s7LFJZTK" target="_blank" class="pay-btn pay-btn-gold">Pay $99 Setup Fee →</a>
+      <div class="step-note">One-time · Never charged again</div>
+    </div>
+
+    <div class="step-arrow">↓</div>
+
+    <div class="step-card step-2">
+      <div class="step-number">Step 2 of 2</div>
+      <div class="step-title">Start Subscription</div>
+      <p class="step-desc">Activate your <strong>$29/month</strong> Starter subscription. 1 event/month, up to 500 fans. Cancel anytime.</p>
+      <a href="https://square.link/u/howJcFSc" target="_blank" class="pay-btn pay-btn-green">Subscribe $29/mo →</a>
+      <div class="step-note">Billed monthly · Cancel anytime</div>
+    </div>
+  </div>
+
+  <div class="what-you-get">
+    <div class="wyg-title">What's Included</div>
+    <ul class="wyg-list">
+      <li>1 listening party / event per month</li>
+      <li>Up to 500 fans voting live</li>
+      <li>Fire / Replay / Skip voting</li>
+      <li>PIN-protected artist dashboard</li>
+      <li>Custom QR code + fan link</li>
+    </ul>
+  </div>
+
+  <div class="intake-section">
+    <div class="intake-title">Starter Intake Form</div>
+    <p class="intake-desc">After completing both payments above, fill this out so we can begin building your platform.</p>
+
+    <form class="intake-form" id="form-starter" onsubmit="submitForm(event, 'starter')">
+      <input type="hidden" name="plan" value="Starter">
+      <input type="text" name="artist_name" placeholder="Artist / Stage Name" required>
+      <input type="email" name="email" placeholder="Email Address" required>
+      <input type="tel" name="phone" placeholder="Phone Number" required>
+      <input type="text" name="instagram" placeholder="Instagram Handle">
+      <input type="text" name="brand_color" placeholder="Brand Color (e.g. red/black, hex code)">
+      <textarea name="notes" placeholder="Anything else we should know?"></textarea>
+      <button type="submit" class="submit-btn">Submit Intake Form</button>
+    </form>
+
+    <div class="success-msg" id="success-starter">
+      <div class="check">✓</div>
+      <p>Received! Roniel will be in touch within 24 hours.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ PRO ═══════════ -->
+<div class="plan-section" id="plan-pro">
+  <div class="plan-header">
+    <div class="plan-name">Pro Plan</div>
+    <div class="plan-price">$99 One-Time Setup Fee + $79/month</div>
+    <p class="plan-includes">Unlimited events · Up to 5,000 fans · Full analytics · QR code · Branded fan page</p>
+  </div>
+
+  <div class="steps">
+    <div class="step-card step-1">
+      <div class="step-number">Step 1 of 2</div>
+      <div class="step-title">Pay Setup Fee</div>
+      <p class="step-desc">The one-time <strong>$99 setup fee</strong> covers your complete DAVOTE build — voting app, Firebase database, Netlify deploy, QR code, and fan link.</p>
+      <a href="https://square.link/u/s7LFJZTK" target="_blank" class="pay-btn pay-btn-gold">Pay $99 Setup Fee →</a>
+      <div class="step-note">One-time · Never charged again</div>
+    </div>
+
+    <div class="step-arrow">↓</div>
+
+    <div class="step-card step-2">
+      <div class="step-number">Step 2 of 2</div>
+      <div class="step-title">Start Subscription</div>
+      <p class="step-desc">Activate your <strong>$79/month</strong> Pro subscription. Unlimited events, up to 5,000 fans, full analytics. Cancel anytime.</p>
+      <a href="https://square.link/u/D8OSRPSW" target="_blank" class="pay-btn pay-btn-green">Subscribe $79/mo →</a>
+      <div class="step-note">Billed monthly · Cancel anytime</div>
+    </div>
+  </div>
+
+  <div class="what-you-get">
+    <div class="wyg-title">Everything in Starter, Plus</div>
+    <ul class="wyg-list">
+      <li>Unlimited listening parties / events</li>
+      <li>Up to 5,000 fans voting live</li>
+      <li>Full post-event analytics</li>
+      <li>Priority support</li>
+    </ul>
+  </div>
+
+  <div class="intake-section">
+    <div class="intake-title">Pro Intake Form</div>
+    <p class="intake-desc">After completing both payments above, fill this out so we can begin building your platform.</p>
+
+    <form class="intake-form" id="form-pro" onsubmit="submitForm(event, 'pro')">
+      <input type="hidden" name="plan" value="Pro">
+      <input type="text" name="artist_name" placeholder="Artist / Stage Name" required>
+      <input type="email" name="email" placeholder="Email Address" required>
+      <input type="tel" name="phone" placeholder="Phone Number" required>
+      <input type="text" name="instagram" placeholder="Instagram Handle">
+      <input type="text" name="brand_color" placeholder="Brand Color (e.g. red/black, hex code)">
+      <textarea name="notes" placeholder="Anything else we should know?"></textarea>
+      <button type="submit" class="submit-btn">Submit Intake Form</button>
+    </form>
+
+    <div class="success-msg" id="success-pro">
+      <div class="check">✓</div>
+      <p>Received! Roniel will be in touch within 24 hours.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ LABEL ═══════════ -->
+<div class="plan-section" id="plan-label">
+  <div class="plan-header">
+    <div class="plan-name">Label Plan</div>
+    <div class="plan-price">$199 One-Time Setup Fee + $299/month</div>
+    <p class="plan-includes">Up to 20 artists · White-label platform · Dedicated account manager · Monthly strategy calls</p>
+  </div>
+
+  <div class="steps">
+    <div class="step-card step-1">
+      <div class="step-number">Step 1 of 2</div>
+      <div class="step-title">Pay Setup Fee</div>
+      <p class="step-desc">The one-time <strong>$199 setup fee</strong> covers your complete white-label DAVOTE build for up to 20 artists — full platform setup, custom branding, and dedicated onboarding.</p>
+      <a href="https://square.link/u/VXMekCMQ" target="_blank" class="pay-btn pay-btn-gold">Pay $199 Setup Fee →</a>
+      <div class="step-note">One-time · Never charged again</div>
+    </div>
+
+    <div class="step-arrow">↓</div>
+
+    <div class="step-card step-2">
+      <div class="step-number">Step 2 of 2</div>
+      <div class="step-title">Start Subscription</div>
+      <p class="step-desc">Activate your <strong>$299/month</strong> Label subscription. Up to 20 artists, white-label platform, dedicated account manager. Cancel anytime.</p>
+      <a href="https://square.link/u/mtSE75RP" target="_blank" class="pay-btn pay-btn-green">Subscribe $299/mo →</a>
+      <div class="step-note">Billed monthly · Cancel anytime</div>
+    </div>
+  </div>
+
+  <div class="what-you-get">
+    <div class="wyg-title">Everything in Pro, Plus</div>
+    <ul class="wyg-list">
+      <li>Up to 20 artists under one account</li>
+      <li>White-label platform with your branding</li>
+      <li>Dedicated account manager</li>
+      <li>Monthly strategy calls with Roniel</li>
+      <li>Priority support — fastest response time</li>
+      <li>Volume discount available</li>
+    </ul>
+  </div>
+
+  <div class="intake-section">
+    <div class="intake-title">Label Intake Form</div>
+    <p class="intake-desc">After completing both payments above, fill this out so we can begin your label onboarding.</p>
+
+    <form class="intake-form" id="form-label" onsubmit="submitForm(event, 'label')">
+      <input type="hidden" name="plan" value="Label">
+      <input type="text" name="artist_name" placeholder="Label / Company Name" required>
+      <input type="email" name="email" placeholder="Email Address" required>
+      <input type="tel" name="phone" placeholder="Phone Number" required>
+      <input type="text" name="instagram" placeholder="Instagram Handle">
+      <input type="text" name="brand_color" placeholder="Brand Color (e.g. hex code)">
+      <textarea name="notes" placeholder="How many artists, and anything else we should know?"></textarea>
+      <button type="submit" class="submit-btn">Submit Intake Form</button>
+    </form>
+
+    <div class="success-msg" id="success-label">
+      <div class="check">✓</div>
+      <p>Received! Roniel will call you within 24 hours to schedule your strategy call.</p>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  DAVOTE™ · Sylvester Enterprises ·
+  <a href="https://davote.app">davote.app</a> ·
+  <a href="tel:4146167885">414.616.7885</a> ·
+  <a href="https://workwithroniel.com">workwithroniel.com</a>
+</div>
+
+<script>
+  function showPlan(plan) {
+    document.querySelectorAll('.plan-section').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.plan-tab').forEach(t => t.classList.remove('active'));
+    document.getElementById('plan-' + plan).classList.add('active');
+    event.target.classList.add('active');
+  }
+
+  function submitForm(e, plan) {
+    e.preventDefault();
+    const form = e.target;
+
+    fetch('https://formspree.io/f/xpqgvoyb', {
+      method: 'POST',
+      body: new FormData(form),
+      headers: { 'Accept': 'application/json' }
+    })
+    .then(response => {
+      if (response.ok) {
+        form.style.display = 'none';
+        document.getElementById('success-' + plan).style.display = 'block';
+      } else {
+        alert('Something went wrong. Please call Roniel directly at 414.616.7885');
+      }
+    })
+    .catch(() => {
+      alert('Something went wrong. Please call Roniel directly at 414.616.7885');
+    });
+  }
+</script>
+</body>
+</html>
